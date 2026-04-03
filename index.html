@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,7 +75,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 .grid-title{font-family:'Black Han Sans',sans-serif;font-size:0.85rem;letter-spacing:0.08em;color:var(--green-light);}
 .grid-hint{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;}
 .grid-canvas{flex:1;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(6,1fr);gap:2px;padding:12px;background:#0d1a0f;background-image:radial-gradient(circle at 20% 80%,rgba(74,124,89,0.08) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(74,124,89,0.05) 0%,transparent 50%);cursor:pointer;}
-.grid-cell{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.15s;position:relative;}
+.grid-cell{background:rgba(74,124,89,0.08);border:1px solid rgba(74,124,89,0.25);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.15s;position:relative;}
 .grid-cell:hover:not(.occupied){background:rgba(74,124,89,0.15);border-color:rgba(74,124,89,0.4);}
 .grid-cell.occupied{cursor:default;}
 .grid-cell.golden{box-shadow:0 0 8px rgba(255,215,0,0.4);}
@@ -132,6 +133,33 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
 .modal-close{background:var(--green);border:none;border-radius:5px;padding:10px 24px;font-family:'Black Han Sans',sans-serif;font-size:0.8rem;letter-spacing:0.1em;color:var(--white);cursor:pointer;text-transform:uppercase;transition:all 0.15s;}
 .modal-close:hover{background:var(--green-light);}
 @media(max-width:768px){.game-wrap{grid-template-columns:1fr;grid-template-rows:auto 360px auto}.sidebar{flex-direction:row;overflow-x:auto;flex-wrap:nowrap;border-right:none;border-bottom:1px solid var(--border)}.sidebar-right{border-left:none;border-top:1px solid var(--border)}.building-card{min-width:120px}.wallet-input{width:180px}}
+
+/* ===== BUILDER RANKS ===== */
+.rank-badge{display:inline-flex;align-items:center;gap:5px;font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid;}
+.rank-settler{background:#1a1a1a;color:#888;border-color:#333;}
+.rank-builder{background:#0d1a0f;color:var(--green-light);border-color:var(--green);}
+.rank-elder{background:#1a1200;color:var(--og);border-color:var(--og-dark);}
+.rank-founder-rank{background:#1a0505;color:#e74c3c;border-color:#6b0000;}
+.rank-legend{background:#150d1a;color:#c084fc;border-color:#7c3aed;}
+
+/* ===== LEADERBOARD PANEL ===== */
+.lb-panel{margin-top:12px;border-top:1px solid var(--border);padding-top:10px;}
+.lb-title{font-family:'Barlow Condensed',sans-serif;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.lb-entry{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:6px 8px;margin-bottom:4px;transition:all 0.2s;}
+.lb-entry.is-me{border-color:var(--green);}
+.lb-rank-num{font-family:'Black Han Sans',sans-serif;font-size:0.75rem;color:var(--muted);min-width:18px;}
+.lb-rank-num.gold{color:var(--gold);}
+.lb-rank-num.silver{color:#aaa;}
+.lb-rank-num.bronze{color:#cd7f32;}
+.lb-name{font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;color:var(--white);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lb-score{font-family:'Black Han Sans',sans-serif;font-size:0.7rem;color:var(--og);}
+.lb-input-row{display:flex;gap:6px;margin-bottom:8px;}
+.lb-name-input{background:var(--card);border:1px solid var(--border);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;padding:5px 8px;border-radius:4px;flex:1;outline:none;}
+.lb-name-input:focus{border-color:var(--green);}
+.lb-join-btn{font-family:'Black Han Sans',sans-serif;font-size:0.62rem;letter-spacing:0.08em;background:var(--green-dark);color:var(--white);border:1px solid var(--green);padding:5px 10px;border-radius:4px;cursor:pointer;text-transform:uppercase;white-space:nowrap;}
+.lb-join-btn:hover{background:var(--green);}
+.share-rank-btn{display:block;width:100%;margin-top:8px;background:#1a0a1a;border:1px solid #7c3aed;border-radius:4px;padding:7px;font-family:'Black Han Sans',sans-serif;font-size:0.65rem;letter-spacing:0.08em;color:#c084fc;cursor:pointer;text-transform:uppercase;transition:all 0.15s;text-align:center;}
+.share-rank-btn:hover{background:#2a1a2a;}
 </style>
 </head>
 <body>
@@ -148,6 +176,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
     <div class="stat-pill"><span class="stat-label">$OG Balance</span><span class="stat-value" id="og-balance">0</span></div>
     <div class="stat-pill"><span class="stat-label">OG/sec</span><span class="stat-value green" id="og-per-sec">0.0</span></div>
     <div class="stat-pill"><span class="stat-label">Combo</span><span class="stat-value white" id="header-combo">x1</span></div>
+    <div class="stat-pill" style="align-items:flex-end"><span class="stat-label">Rank</span><span id="rank-badge" class="rank-badge rank-settler">🪓 Settler</span></div>
     <div class="stat-pill"><span class="stat-label">Population</span><span class="stat-value green" id="population">0</span></div>
   </div>
 </header>
@@ -218,13 +247,22 @@ header{display:flex;align-items:center;justify-content:space-between;padding:12p
     <div class="milestone-list" id="milestones"></div>
 
     <a href="https://pump.fun/coin/Cdjwd7RLPzrnuPrV5Ju5G2AZRsdkUuBqwEPbUHa2pump" target="_blank" class="buy-btn">💰 Buy Real $OG on Pump.fun</a>
+    <button class="share-rank-btn" onclick="shareRank()" style="margin-top:6px;">📤 Share my rank on X 🪖</button>
 
     <div class="log-area">
       <div class="log-title">Village Log</div>
       <div id="log"></div>
     </div>
+
+    <div class="lb-panel">
+      <div class="lb-title">🏆 Builder Leaderboard</div>
+      <div class="lb-input-row">
+        <input class="lb-name-input" id="lb-name-input" placeholder="Enter your name..." maxlength="18">
+        <button class="lb-join-btn" onclick="joinLeaderboard()">Join</button>
+      </div>
+      <div id="leaderboard-list"></div>
+    </div>
   </div>
-</div>
 
 <div class="modal-overlay" id="modal">
   <div class="modal">
@@ -585,6 +623,139 @@ addLog('Welcome! You start with 500 $OG.','good');
 addLog('Click the work zone to earn more.','');
 addLog('Verify wallet to unlock holder perks!','gold');
 setInterval(gameTick,500);
+
+
+// ===== BUILDER RANKS =====
+const RANKS = [
+  {min:0,   id:'settler',     label:'🪓 Settler',   cls:'rank-settler'},
+  {min:5,   id:'builder',     label:'🔨 Builder',   cls:'rank-builder'},
+  {min:15,  id:'elder',       label:'🏕️ Elder',      cls:'rank-elder'},
+  {min:30,  id:'elder2',      label:'🌿 Village Elder', cls:'rank-elder'},
+  {min:48,  id:'founder-rank',label:'👑 OG Founder', cls:'rank-founder-rank'},
+];
+
+function getCurrentRank(buildings) {
+  let rank = RANKS[0];
+  for (const r of RANKS) {
+    if (buildings >= r.min) rank = r;
+  }
+  return rank;
+}
+
+function updateRankBadge() {
+  const rank = getCurrentRank(state.buildingsPlaced);
+  const el = document.getElementById('rank-badge');
+  if (el) {
+    el.textContent = rank.label;
+    el.className = 'rank-badge ' + rank.cls;
+  }
+}
+
+// ===== LEADERBOARD =====
+let leaderboard = [];
+let myEntry = null;
+try {
+  leaderboard = JSON.parse(localStorage.getItem('og_leaderboard') || '[]');
+  myEntry = JSON.parse(localStorage.getItem('og_my_entry') || 'null');
+} catch(e) { leaderboard = []; myEntry = null; }
+
+function saveLeaderboard() {
+  try {
+    localStorage.setItem('og_leaderboard', JSON.stringify(leaderboard));
+    if (myEntry) localStorage.setItem('og_my_entry', JSON.stringify(myEntry));
+  } catch(e) {}
+}
+
+function joinLeaderboard() {
+  const nameInput = document.getElementById('lb-name-input');
+  const name = nameInput ? nameInput.value.trim() : '';
+  if (!name) { showToast('Enter your builder name first!'); return; }
+  
+  const rank = getCurrentRank(state.buildingsPlaced);
+  myEntry = { name: name.slice(0, 18), buildings: state.buildingsPlaced, rank: rank.label, ts: Date.now() };
+  
+  // Remove old entry with same name
+  leaderboard = leaderboard.filter(e => e.name !== myEntry.name);
+  leaderboard.push(myEntry);
+  leaderboard.sort((a, b) => b.buildings - a.buildings);
+  if (leaderboard.length > 20) leaderboard = leaderboard.slice(0, 20);
+  saveLeaderboard();
+  renderLeaderboard();
+  showToast('🏆 Added to leaderboard as ' + name + '!', true);
+}
+
+function renderLeaderboard() {
+  const list = document.getElementById('leaderboard-list');
+  if (!list) return;
+  
+  // Always update my entry score if on leaderboard
+  if (myEntry) {
+    const idx = leaderboard.findIndex(e => e.name === myEntry.name);
+    if (idx !== -1) {
+      const rank = getCurrentRank(state.buildingsPlaced);
+      leaderboard[idx].buildings = state.buildingsPlaced;
+      leaderboard[idx].rank = rank.label;
+      leaderboard.sort((a, b) => b.buildings - a.buildings);
+      saveLeaderboard();
+    }
+  }
+  
+  if (leaderboard.length === 0) {
+    list.innerHTML = '<div style="font-family:Barlow Condensed,sans-serif;font-size:0.65rem;color:var(--muted);text-align:center;padding:8px">No builders yet — be first! 🪓</div>';
+    return;
+  }
+  
+  list.innerHTML = '';
+  const top = leaderboard.slice(0, 8);
+  top.forEach((entry, i) => {
+    const isMe = myEntry && entry.name === myEntry.name;
+    const numCls = i === 0 ? ' gold' : i === 1 ? ' silver' : i === 2 ? ' bronze' : '';
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1);
+    const div = document.createElement('div');
+    div.className = 'lb-entry' + (isMe ? ' is-me' : '');
+    div.innerHTML = `<div class="lb-rank-num${numCls}">${medal}</div><div class="lb-name">${entry.name}</div><div class="lb-score">${entry.buildings}🏗</div>`;
+    list.appendChild(div);
+  });
+}
+
+function shareRank() {
+  var rank = getCurrentRank(state.buildingsPlaced);
+  var msg = '\u{1FA96} I am a ' + rank.label + ' in Green Rock Builder!' +
+    '\n\u{1F3D7} ' + state.buildingsPlaced + ' buildings placed' +
+    '\n\uD83D\uDCB0 ' + fmt(state.totalEarned) + ' $OG earned' +
+    '\n\nBuild the off-grid village with the Orphan Gang' +
+    '\nfreewill87.github.io/green-rock-builder' +
+    '\n\n$OG #OrphanGang #GreenRock';
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// Patch updateUI to also update rank
+const _origUpdateUI = updateUI;
+// We'll call updateRankBadge and renderLeaderboard from the game tick instead
+
+// Override gameTick to include rank updates
+const _origGameTick = gameTick;
+
+setInterval(() => {
+  updateRankBadge();
+  renderLeaderboard();
+}, 2000);
+
+// Seed with sample data if empty so leaderboard looks alive
+if (leaderboard.length === 0) {
+  leaderboard = [
+    {name:'OGTcrypto', buildings:12, rank:'🔨 Builder', ts: Date.now()-5000},
+    {name:'GreenRockDave', buildings:7, rank:'🔨 Builder', ts: Date.now()-4000},
+    {name:'Orphan_Mike', buildings:3, rank:'🪓 Settler', ts: Date.now()-3000},
+  ];
+}
+
+// Initial render
+setTimeout(() => {
+  updateRankBadge();
+  renderLeaderboard();
+}, 100);
+
 </script>
 </body>
 </html>
