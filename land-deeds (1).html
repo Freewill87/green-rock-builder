@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Rock Land Deeds | Orphan Gang $OG</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0a;--dark:#111111;--card:#161616;--border:#222222;
+  --green:#4a7c59;--green-light:#6aab7a;--green-dark:#2d4f38;
+  --white:#f0ede6;--muted:#555550;--og:#e8a020;--og-dark:#a06010;--gold:#ffd700;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.35;}
+
+/* HEADER */
+header{padding:20px 30px;border-bottom:1px solid var(--border);background:var(--dark);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-icon{font-size:2rem;}
+.logo-text{font-family:'Black Han Sans',sans-serif;font-size:1.2rem;letter-spacing:0.06em;}
+.logo-sub{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-light);margin-top:2px;}
+.header-links{display:flex;gap:12px;}
+.header-link{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.15s;}
+.header-link:hover{color:var(--og);}
+
+/* HERO */
+.hero{text-align:center;padding:60px 30px 40px;}
+.hero-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--green-light);margin-bottom:16px;}
+.hero-title{font-family:'Black Han Sans',sans-serif;font-size:clamp(2.5rem,6vw,4.5rem);letter-spacing:0.04em;line-height:1;margin-bottom:16px;}
+.hero-title span{color:var(--og);}
+.hero-sub{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;color:var(--muted);letter-spacing:0.08em;max-width:580px;margin:0 auto 30px;}
+.hero-stats{display:flex;gap:40px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;}
+.hero-stat{text-align:center;}
+.hero-stat-num{font-family:'Black Han Sans',sans-serif;font-size:2.5rem;color:var(--og);}
+.hero-stat-label{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+
+/* CLAIM CTA */
+.claim-bar{background:#0d110e;border:1px solid var(--green);border-radius:8px;padding:16px 24px;max-width:700px;margin:0 auto 50px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.claim-bar-text{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:0.1em;color:var(--muted);}
+.claim-bar-text strong{color:var(--og);}
+.claim-btn{font-family:'Black Han Sans',sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--og);color:var(--black);border:none;padding:10px 24px;border-radius:5px;cursor:pointer;transition:all 0.15s;text-decoration:none;white-space:nowrap;}
+.claim-btn:hover{background:var(--gold);}
+
+/* MAP SECTION */
+.map-section{max-width:1200px;margin:0 auto;padding:0 20px 60px;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.section-title{font-family:'Black Han Sans',sans-serif;font-size:1.2rem;letter-spacing:0.08em;color:var(--green-light);}
+.legend{display:flex;gap:16px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:6px;font-family:'Barlow Condensed',sans-serif;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.legend-dot{width:10px;height:10px;border-radius:2px;}
+.legend-dot.available{background:var(--green-dark);border:1px solid var(--green);}
+.legend-dot.claimed{background:#1a1200;border:1px solid var(--og);}
+
+/* PLOT GRID */
+.plot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;}
+.plot-card{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:14px;cursor:pointer;transition:all 0.2s;position:relative;min-height:130px;display:flex;flex-direction:column;justify-content:space-between;}
+.plot-card.available:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 4px 20px rgba(74,124,89,0.2);}
+.plot-card.claimed{border-color:var(--og);background:#0d0a00;}
+.plot-card.founder{border-color:var(--gold);background:#0d0a00;}
+.plot-num{font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.plot-emoji{font-size:1.8rem;display:block;margin:6px 0;}
+.plot-type{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);}
+.plot-holder{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--og);margin-top:4px;letter-spacing:0.05em;}
+.plot-badge{position:absolute;top:8px;right:8px;font-family:'Barlow Condensed',sans-serif;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
+.badge-available{background:var(--green-dark);color:var(--green-light);border:1px solid var(--green);}
+.badge-claimed{background:#1a1200;color:var(--og);border:1px solid var(--og-dark);}
+.badge-founder{background:#1a1000;color:var(--gold);border:1px solid #806000;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity 0.3s;padding:20px;}
+.modal-overlay.show{opacity:1;pointer-events:all;}
+.modal{background:var(--dark);border:1px solid var(--green);border-radius:12px;padding:32px;max-width:460px;width:100%;text-align:center;}
+.modal-emoji{font-size:3rem;margin-bottom:12px;display:block;}
+.modal-title{font-family:'Black Han Sans',sans-serif;font-size:1.6rem;letter-spacing:0.06em;margin-bottom:6px;}
+.modal-plot{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-light);margin-bottom:20px;}
+.modal-body{font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.modal-body strong{color:var(--white);}
+.modal-input{background:var(--card);border:1px solid var(--border);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;padding:10px 14px;border-radius:5px;width:100%;outline:none;margin-bottom:10px;transition:border-color 0.2s;}
+.modal-input:focus{border-color:var(--green);}
+.modal-input::placeholder{color:var(--muted);}
+.modal-claim-btn{width:100%;background:var(--og);border:none;border-radius:5px;padding:12px;font-family:'Black Han Sans',sans-serif;font-size:0.85rem;letter-spacing:0.1em;color:var(--black);cursor:pointer;text-transform:uppercase;transition:all 0.15s;margin-bottom:10px;}
+.modal-claim-btn:hover{background:var(--gold);}
+.modal-close{background:transparent;border:1px solid var(--border);border-radius:5px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.1em;color:var(--muted);cursor:pointer;width:100%;text-transform:uppercase;transition:all 0.15s;}
+.modal-close:hover{border-color:var(--muted);}
+.modal-note{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--muted);letter-spacing:0.08em;margin-top:14px;line-height:1.5;}
+
+/* HOW IT WORKS */
+.how-section{background:var(--dark);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:50px 30px;text-align:center;margin-bottom:60px;}
+.how-title{font-family:'Black Han Sans',sans-serif;font-size:1.4rem;letter-spacing:0.08em;margin-bottom:40px;color:var(--green-light);}
+.how-steps{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto;}
+.how-step{flex:1;min-width:200px;max-width:260px;}
+.how-step-num{font-family:'Black Han Sans',sans-serif;font-size:2.5rem;color:var(--og);margin-bottom:10px;}
+.how-step-title{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--white);margin-bottom:8px;}
+.how-step-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+
+/* FOOTER */
+footer{text-align:center;padding:30px;border-top:1px solid var(--border);}
+.footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;}
+.footer-link{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.15s;}
+.footer-link:hover{color:var(--og);}
+.footer-note{font-family:'Barlow Condensed',sans-serif;font-size:0.65rem;color:var(--border);letter-spacing:0.08em;}
+
+@media(max-width:600px){
+  .hero-title{font-size:2.2rem;}
+  .plot-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}
+  .claim-bar{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🪖</div>
+    <div>
+      <div class="logo-text">ORPHAN GANG $OG</div>
+      <div class="logo-sub">Green Rock Land Deeds</div>
+    </div>
+  </div>
+  <div class="header-links">
+    <a href="index.html" class="header-link" style="color:var(--green-light);border:1px solid var(--green);padding:5px 12px;border-radius:4px;">← Back to Game</a>
+    <a href="https://freewill87.github.io/green-rock-builder" class="header-link">🏗 Game</a>
+    <a href="https://pump.fun/coin/Cdjwd7RLPzrnuPrV5Ju5G2AZRsdkUuBqwEPbUHa2pump" target="_blank" class="header-link">💰 Buy $OG</a>
+    <a href="https://x.com/OGTcrypto" target="_blank" class="header-link">𝕏 Follow</a>
+    <a href="https://t.me/ogtoken_official" target="_blank" class="header-link">✈️ Telegram</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">🌿 The First Memecoin With A Physical Destination</div>
+  <h1 class="hero-title">GREEN ROCK<br><span>LAND DEEDS</span></h1>
+  <p class="hero-sub">48 plots. 48 founding members. Forever on the map. When Green Rock gets built, deed holders get first right to their land.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num" id="stat-total">48</div>
+      <div class="hero-stat-label">Total Plots</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" id="stat-claimed">0</div>
+      <div class="hero-stat-label">Claimed</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num" id="stat-available">48</div>
+      <div class="hero-stat-label">Available</div>
+    </div>
+  </div>
+  <div class="claim-bar">
+    <div class="claim-bar-text">Hold <strong>11,000,000 $OG</strong> (≈ 0.60 SOL) to claim your plot. Only 48 exist. Ever.</div>
+    <a href="https://pump.fun/coin/Cdjwd7RLPzrnuPrV5Ju5G2AZRsdkUuBqwEPbUHa2pump" target="_blank" class="claim-btn">Get $OG → Claim Plot</a>
+  </div>
+</div>
+
+<div class="how-section">
+  <div class="how-title">HOW TO CLAIM YOUR LAND DEED</div>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="how-step-num">01</div>
+      <div class="how-step-title">Buy $OG</div>
+      <div class="how-step-desc">Get 11,000,000 $OG on pump.fun. That's about 0.60 SOL — your reservation fee for a founding plot.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">02</div>
+      <div class="how-step-title">Choose Your Plot</div>
+      <div class="how-step-desc">Pick any available plot on the map. A-Frame Cabins, Greenhouses, Farms, Tiny Homes, Workshops, and the Community Hall.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">03</div>
+      <div class="how-step-title">Claim It</div>
+      <div class="how-step-desc">DM @OGTcrypto on X with your wallet and plot number. Your name goes on the map forever. Your deed gets issued.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-step-num">04</div>
+      <div class="how-step-title">First Right</div>
+      <div class="how-step-desc">When Green Rock Village gets built, founding deed holders get first right to their physical plot. This is real.</div>
+    </div>
+  </div>
+</div>
+
+<div class="map-section">
+  <div class="section-header">
+    <div class="section-title">🗺️ GREEN ROCK VILLAGE MAP</div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot available"></div>Available</div>
+      <div class="legend-item"><div class="legend-dot claimed"></div>Claimed</div>
+    </div>
+  </div>
+  <div class="plot-grid" id="plot-grid"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <span class="modal-emoji" id="modal-emoji">🏠</span>
+    <div class="modal-title" id="modal-title">A-Frame Cabin</div>
+    <div class="modal-plot" id="modal-plot">Plot #01 · Green Rock Village</div>
+    <div class="modal-body" id="modal-body">
+      This plot is <strong>available</strong>. Claim it by holding <strong>11,000,000 $OG</strong> and DMing <strong>@OGTcrypto</strong> on X with your wallet address and plot number.
+    </div>
+    <a href="https://x.com/OGTcrypto" target="_blank" class="modal-claim-btn">DM @OGTcrypto to Claim 🪖</a>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+    <div class="modal-note">⚠️ Claims are verified manually. Hold 11M+ $OG in your wallet when you DM. Your name goes on the map within 24hrs.</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://freewill87.github.io/green-rock-builder" class="footer-link">Green Rock Builder</a>
+    <a href="https://pump.fun/coin/Cdjwd7RLPzrnuPrV5Ju5G2AZRsdkUuBqwEPbUHa2pump" target="_blank" class="footer-link">Buy $OG</a>
+    <a href="https://x.com/OGTcrypto" target="_blank" class="footer-link">X / Twitter</a>
+    <a href="https://t.me/ogtoken_official" target="_blank" class="footer-link">Telegram</a>
+    <a href="https://linktr.ee/Ogtoken" target="_blank" class="footer-link">Linktree</a>
+  </div>
+  <div class="footer-note">Orphan Gang $OG · CA: Cdjwd7RLPzrnuPrV5Ju5G2AZRsdkUuBqwEPbUHa2pump · Green Rock is real. 🪖</div>
+</footer>
+
+<script>
+const PLOTS = [
+  {id:1,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:2,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:3,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:4,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:5,type:'Workshop',emoji:'🔨',holder:null},
+  {id:6,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:7,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:8,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:9,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:10,type:'Workshop',emoji:'🔨',holder:null},
+  {id:11,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:12,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:13,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:14,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:15,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:16,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:17,type:'Workshop',emoji:'🔨',holder:null},
+  {id:18,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:19,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:20,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:21,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:22,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:23,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:24,type:'Workshop',emoji:'🔨',holder:null},
+  {id:25,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:26,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:27,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:28,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:29,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:30,type:'Workshop',emoji:'🔨',holder:null},
+  {id:31,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:32,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:33,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:34,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:35,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:36,type:'Workshop',emoji:'🔨',holder:null},
+  {id:37,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:38,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:39,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:40,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:41,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:42,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:43,type:'Workshop',emoji:'🔨',holder:null},
+  {id:44,type:'A-Frame Cabin',emoji:'🏠',holder:null},
+  {id:45,type:'Organic Farm',emoji:'🌾',holder:null},
+  {id:46,type:'Greenhouse',emoji:'🌿',holder:null},
+  {id:47,type:'Tiny Home',emoji:'🏡',holder:null},
+  {id:48,type:'Community Hall',emoji:'🏛️',holder:'FreeWill — Founder',isFounder:true},
+];
+
+let selectedPlot = null;
+
+function renderGrid(){
+  const grid = document.getElementById('plot-grid');
+  grid.innerHTML = '';
+  let claimed = 0;
+  PLOTS.forEach(p => {
+    if(p.holder) claimed++;
+    const div = document.createElement('div');
+    div.className = 'plot-card ' + (p.holder ? (p.isFounder ? 'founder' : 'claimed') : 'available');
+    div.innerHTML = `
+      <div>
+        <div class="plot-num">Plot #${String(p.id).padStart(2,'0')}</div>
+        <span class="plot-emoji">${p.emoji}</span>
+        <div class="plot-type">${p.type}</div>
+        ${p.holder ? `<div class="plot-holder">🪖 ${p.holder}</div>` : ''}
+      </div>
+      <div class="plot-badge ${p.holder ? (p.isFounder ? 'badge-founder' : 'badge-claimed') : 'badge-available'}">${p.holder ? (p.isFounder ? '👑 Founder' : 'Claimed') : 'Available'}</div>
+    `;
+    if(!p.holder) div.addEventListener('click', () => openModal(p));
+    else div.addEventListener('click', () => openClaimedModal(p));
+    grid.appendChild(div);
+  });
+  document.getElementById('stat-claimed').textContent = claimed;
+  document.getElementById('stat-available').textContent = 48 - claimed;
+}
+
+function openModal(plot){
+  selectedPlot = plot;
+  document.getElementById('modal-emoji').textContent = plot.emoji;
+  document.getElementById('modal-title').textContent = plot.type;
+  document.getElementById('modal-plot').textContent = `Plot #${String(plot.id).padStart(2,'0')} · Green Rock Village`;
+  document.getElementById('modal-body').innerHTML = `This plot is <strong>available</strong>. Claim it by holding <strong>11,000,000 $OG</strong> and DMing <strong>@OGTcrypto</strong> on X with your wallet address and plot number.<br><br>Your name goes on this map <strong>forever</strong>. When Green Rock Village gets built, you get first right to this physical plot.`;
+  document.getElementById('modal').classList.add('show');
+}
+
+function openClaimedModal(plot){
+  document.getElementById('modal-emoji').textContent = plot.emoji;
+  document.getElementById('modal-title').textContent = plot.type;
+  document.getElementById('modal-plot').textContent = `Plot #${String(plot.id).padStart(2,'0')} · Green Rock Village`;
+  document.getElementById('modal-body').innerHTML = `This plot is <strong>claimed</strong> by <strong>${plot.holder}</strong>.<br><br>Choose another available plot or <a href="https://pump.fun/coin/Cdjwd7RLPzrnuPrV5Ju5G2AZRsdkUuBqwEPbUHa2pump" target="_blank" style="color:var(--og)">buy more $OG</a> to secure your spot before they're all gone.`;
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+  selectedPlot = null;
+}
+
+document.getElementById('modal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+
+renderGrid();
+</script>
+</body>
+</html>
